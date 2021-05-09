@@ -1,0 +1,36 @@
+{
+  "name": "library-management-system",
+  "version": "1.0.0",
+  "description": "library management system API",
+  "main": "app.js",
+  "scripts": {
+    "watch": "nodemon app.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suryaherdiyanto/node-library-management-system.git"
+  },
+  "keywords": [
+    "node",
+    "library",
+    "management"
+  ],
+  "author": "I Gede Surya Herdiyanto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suryaherdiyanto/node-library-management-system/issues"
+  },
+  "homepage": "https://github.com/suryaherdiyanto/node-library-management-system#readme",
+  "dependencies": {
+    "dotenv": "^9.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.7"
+  }
+}
