@@ -1,0 +1,33 @@
+version: '3.3'
+
+services: 
+
+    mariadb:
+        container_name: library_management_db
+        image: mariadb:latest
+        ports: 
+            - "3306:3306"
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: library_management_db
+        networks: 
+            - "app"
+    
+    phpmyadmin:
+        container_name: library_management_pma
+        image: phpmyadmin:latest
+        environment: 
+            - PMA_ARBITARY=1
+            - PMA_HOST=mariadb
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+        depends_on:
+            - mariadb
+        ports: 
+            - "8080:80"
+        networks: 
+            - "app"
+
+networks: 
+    app:
+        driver: bridge
