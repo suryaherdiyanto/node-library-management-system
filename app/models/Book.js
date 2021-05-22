@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: false,
         },
+        coverImage: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
         publisherId: {
             type: DataTypes.INTEGER,
             defaultValue: 0,

@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const apiRoutes = require('./routes/api');
+
 const authorRoutes = require('./routes/author');
+const publisherRoutes = require('./routes/publisher');
 const { sequelize } = require('./app/models/index');
 
 
@@ -12,6 +14,7 @@ app.use(express.urlencoded({ extended: true } ));
 
 app.use('/api', apiRoutes);
 app.use('/authors', authorRoutes);
+app.use('/publishers', publisherRoutes);
 
 app.all('*', (_, res) => {
     res.status(404).json({
