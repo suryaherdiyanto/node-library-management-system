@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const apiRoutes = require('./routes/api');
 const authorRoutes = require('./routes/author');
-const sequelize = require('./app/models/index');
+const { sequelize } = require('./app/models/index');
 
 
 const app = express();
@@ -19,6 +19,14 @@ app.all('*', (_, res) => {
         message: 'Url that you looking for cloun\'t be found!'
     });
 });
+
+app.locals.handleError = function(res, exception, statusCode = 500) {
+    res.status(statusCode).json({
+        status: 'error',
+        statusCode: statusCode,
+        message: exception.message
+    });
+}
 
 sequelize.authenticate().then(() => {
     console.log('Database connected successfully!');

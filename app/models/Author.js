@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const Author = sequelize.define('Authors', {
+    const Author = sequelize.define('Author', {
         title: {
             type: DataTypes.ENUM('Mr', 'Mrs'),
             defaultValue: 'Mr'

@@ -1,37 +1,48 @@
-const { Authors } = require('../models/index').models;
+const { Author } = require('../models/index').db;
 
 module.exports = {
 
     index: async function(req, res) {
-        const authors = await Authors.findAll();
 
-        res.status(200).json({
-            status: 'success',
-            data: authors
-        });
+        try {
+            const authors = await Author.findAll();
+    
+            res.status(200).json({
+                status: 'success',
+                data: authors
+            });
+        } catch(e) {
+            req.app.locals.handleError(res, e);
+        }
     },
 
     create: async function(req, res) {
         const { title, firstName, lastName, dob, address } = req.body;
-        const author = await Authors.create({
-            title,
-            firstName,
-            lastName,
-            dob,
-            address
-        });
 
-        res.status(200).json({
-            status: 'success',
-            message: 'A new author has been created!',
-            author: author
-        });
+        try {
+            const author = await Author.create({
+                title,
+                firstName,
+                lastName,
+                dob,
+                address
+            });
+    
+            res.status(200).json({
+                status: 'success',
+                message: 'A new author has been created!',
+                author: author
+            });
+        } catch(e) {
+            req.app.locals.handleError(res, e);
+        }
+        
     },
 
     edit: async function(req, res) {
         try {
             
-            const author = await Authors.findByPk(req.params.id);
+            const author = await Author.findByPk(req.params.id);
     
             if (!author) {
                 res.status(404).json({
@@ -45,10 +56,7 @@ module.exports = {
                 data: author
             });
         } catch(e) {
-            res.status(500).json({
-                status: 'error',
-                message: e.message
-            });
+            req.app.locals.handleError(res, e);
         }
     },
 
@@ -56,7 +64,7 @@ module.exports = {
         try {
             const { title, firstName, lastName, dob, address } = req.body;
 
-            await Authors.update({
+            await Author.update({
                 title,
                 firstName,
                 lastName,
@@ -69,27 +77,21 @@ module.exports = {
                 message: 'The author has been saved!'
             });
         } catch(e) {
-            res.status(500).json({
-                status: 'error',
-                message: e.message
-            });
+            req.app.locals.handleError(res, e);
         }
     },
 
     destroy: async function(req, res) {
         try {
 
-            await Authors.destroy( { where: { id: req.params.id } } );
+            await Author.destroy( { where: { id: req.params.id } } );
 
             res.status(200).json({
                 status: 'success',
                 message: 'The author has been deleted!'
             });
         } catch(e) {
-            res.status(500).json({
-                status: 'error',
-                message: e.message
-            });
+            req.app.locals.handleError(res, e);
         }
     }
 

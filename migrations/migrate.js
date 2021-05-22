@@ -1,5 +1,5 @@
 require('dotenv').config();
-const sequelize = require('../app/models/index');
+const { sequelize } = require('../app/models/index');
 
 sequelize.authenticate().then(() => {
     console.log('Database successfully connected!');

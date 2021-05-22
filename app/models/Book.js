@@ -1,7 +1,7 @@
 const { Deferrable } = require('sequelize');
 
 module.exports = function (sequelize, DataTypes) {
-    const Book = sequelize.define('Books', {
+    const Book = sequelize.define('Book', {
         title: {
             type: DataTypes.STRING,
             allowNull: false
