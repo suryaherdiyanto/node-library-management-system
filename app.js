@@ -23,12 +23,29 @@ app.all('*', (_, res) => {
     });
 });
 
-app.locals.handleError = function(res, exception, statusCode = 500) {
-    res.status(statusCode).json({
-        status: 'error',
-        statusCode: statusCode,
-        message: exception.message
-    });
+app.locals.handleError = function(res, exception) {
+
+    if (exception.name === 'SequelizeValidationError') {
+        const errors = {};
+        exception.errors.forEach(e => {
+            if (!errors[e.path]) {
+                errors[e.path] = [e.message];
+            } else {
+                errors[e.path].push(e.message);
+            }
+        });
+
+        res.status(422).json({
+            success: false,
+            errors: errors
+        });
+    } else {
+        res.status(statusCode).json({
+            status: 'error',
+            statusCode: statusCode,
+            message: exception.message
+        });
+    }
 }
 
 sequelize.authenticate().then(() => {

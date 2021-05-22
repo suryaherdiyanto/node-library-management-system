@@ -3,7 +3,8 @@ const fs = require('fs');
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT
+    dialect: process.env.DB_DIALECT,
+    logging: (process.env.APP_ENV === 'local') ? console.log:false
 });
 
 let db = {};
