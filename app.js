@@ -36,7 +36,7 @@ app.locals.handleError = function(res, exception) {
         });
 
         res.status(422).json({
-            success: false,
+            status: 'validation errors',
             errors: errors
         });
     } else {
