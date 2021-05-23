@@ -6,15 +6,19 @@ const authorRoutes = require('./routes/author');
 const publisherRoutes = require('./routes/publisher');
 const { sequelize } = require('./app/models/index');
 
+const { validation } = require('@kodinggen/express-validator');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true } ));
 
+// Validation init
+app.use(validation());
+
 app.use('/api', apiRoutes);
-app.use('/authors', authorRoutes);
-app.use('/publishers', publisherRoutes);
+app.use('/api/authors', authorRoutes);
+app.use('/api/publishers', publisherRoutes);
 
 app.all('*', (_, res) => {
     res.status(404).json({
@@ -22,6 +26,10 @@ app.all('*', (_, res) => {
         message: 'Url that you looking for cloun\'t be found!'
     });
 });
+
+app.locals.baseUrl = function() {
+    return `${process.env.APP_URL}`;
+}
 
 app.locals.handleError = function(res, exception) {
 
@@ -40,9 +48,8 @@ app.locals.handleError = function(res, exception) {
             errors: errors
         });
     } else {
-        res.status(statusCode).json({
+        res.status(500).json({
             status: 'error',
-            statusCode: statusCode,
             message: exception.message
         });
     }

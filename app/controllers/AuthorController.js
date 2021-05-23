@@ -17,9 +17,23 @@ module.exports = {
     },
 
     create: async function(req, res) {
-        const { title, firstName, lastName, dob, address } = req.body;
-
+        
+        
         try {
+            const { title, firstName, lastName, dob, address } = req.body;
+            const validator = req.validator.build({ title, firstName, lastName, dob, address }, {
+                title: 'required|enum:Mr,Mrs',
+                firstName: 'required|string',
+                lastName: 'required|string',
+                dob: 'required',
+                address: 'required'
+            });
+            const validationResult = await validator.validate();
+    
+            if (validationResult.status === 'error') {
+                return res.status(422).json(validationResult.data);
+            }
+
             const author = await Author.create({
                 title,
                 firstName,
@@ -63,6 +77,18 @@ module.exports = {
     update: async function(req, res) {
         try {
             const { title, firstName, lastName, dob, address } = req.body;
+            const validator = req.validator.build({ title, firstName, lastName, dob, address }, {
+                title: 'required|enum:Mr,Mrs',
+                firstName: 'required|string',
+                lastName: 'required|string',
+                dob: 'required',
+                address: 'required'
+            });
+            const validationResult = await validator.validate();
+    
+            if (validationResult.status === 'error') {
+                return res.status(422).json(validationResult.data);
+            }
 
             await Author.update({
                 title,

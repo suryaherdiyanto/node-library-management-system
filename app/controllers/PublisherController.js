@@ -17,9 +17,20 @@ module.exports = {
     },
 
     create: async function(req, res) {
-        const { name, phoneNumber, address } = req.body;
 
         try {
+            const { name, phoneNumber, address } = req.body;
+            const validator = req.validator.build({ name, phoneNumber, address }, {
+                name: 'required|string',
+                phoneNumber: 'required|string|max:20',
+                address: 'required'
+            });
+            const validationResult = await validator.validate();
+
+            if (validationResult.status === 'error') {
+                return res.status(422).json(validationResult.data);
+            }
+
             const publisher = await Publisher.create({ name, phoneNumber, address });
     
             res.status(200).json({
