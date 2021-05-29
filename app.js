@@ -45,11 +45,13 @@ app.locals.handleError = function(res, exception) {
 
         res.status(422).json({
             status: 'validation errors',
+            statusCode: 422,
             errors: errors
         });
     } else {
         res.status(500).json({
             status: 'error',
+            statusCode: 500,
             message: exception.message
         });
     }

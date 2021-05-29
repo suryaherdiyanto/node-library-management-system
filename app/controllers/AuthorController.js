@@ -5,11 +5,11 @@ module.exports = {
     index: async function(req, res) {
 
         try {
-            const authors = await Author.findAll();
+            const authors = await Author.paginate();
     
             res.status(200).json({
                 status: 'success',
-                data: authors
+                authors
             });
         } catch(e) {
             req.app.locals.handleError(res, e);
@@ -57,6 +57,8 @@ module.exports = {
         try {
             
             const author = await Author.findByPk(req.params.id);
+
+            author.test();
     
             if (!author) {
                 res.status(404).json({

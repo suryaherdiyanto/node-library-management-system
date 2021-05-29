@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Model } = require('sequelize');
 const fs = require('fs');
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -15,9 +15,9 @@ const models = fs.readdirSync(__dirname).filter((item) => {
 });
 models.forEach((modelFile) => {
     const model = require(`${__dirname}/${modelFile}`);
-    const Model = model(sequelize, DataTypes);
+    const instance = model(sequelize, DataTypes, Model);
 
-    db[Model.name] = Model;
+    db[instance.name] = instance;
 });
 
 module.exports = { sequelize, db };
