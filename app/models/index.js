@@ -20,4 +20,9 @@ models.forEach((modelFile) => {
     db[instance.name] = instance;
 });
 
+
+// Associations
+db['Book'].belongsTo(db['Publisher'], { foreignKey: 'publisherId' });
+db['Book'].belongsTo(db['Author'], { foreignKey: 'authorId' });
+
 module.exports = { sequelize, db };

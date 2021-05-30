@@ -5,7 +5,9 @@ module.exports = {
     index: async function(req, res) {
 
         try {
-            const authors = await Author.paginate();
+            const { page, perpage } = req.query;
+
+            const authors = await Author.paginate(undefined, parseInt(page) || 1, parseInt(perpage) || 10);
     
             res.status(200).json({
                 status: 'success',

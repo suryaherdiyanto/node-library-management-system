@@ -5,11 +5,13 @@ module.exports = {
     index: async function(req, res) {
 
         try {
-            const publishers = await Publisher.findAll();
+            const { page, perpage } = req.query;
+            
+            const publishers = await Publisher.paginate(undefined, parseInt(page) || 1, parseInt(perpage) || 10);
     
             res.status(200).json({
                 status: 'success',
-                data: publishers
+                publishers
             });
         } catch(e) {
             req.app.locals.handleError(res, e);

@@ -4,6 +4,7 @@ const apiRoutes = require('./routes/api');
 
 const authorRoutes = require('./routes/author');
 const publisherRoutes = require('./routes/publisher');
+const bookRoutes = require('./routes/book');
 const { sequelize } = require('./app/models/index');
 
 const { validation } = require('@kodinggen/express-validator');
@@ -19,11 +20,12 @@ app.use(validation());
 app.use('/api', apiRoutes);
 app.use('/api/authors', authorRoutes);
 app.use('/api/publishers', publisherRoutes);
+app.use('/api/books', bookRoutes);
 
 app.all('*', (_, res) => {
     res.status(404).json({
         status: 'not found',
-        message: 'Url that you looking for cloun\'t be found!'
+        message: 'Url that you looking for cloun\'t be found!',
     });
 });
 
@@ -46,7 +48,8 @@ app.locals.handleError = function(res, exception) {
         res.status(422).json({
             status: 'validation errors',
             statusCode: 422,
-            errors: errors
+            errors: errors,
+            stack: process.env.NODE_ENV !== 'production' ? exception.stack:''
         });
     } else {
         res.status(500).json({
