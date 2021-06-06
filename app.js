@@ -5,6 +5,7 @@ const apiRoutes = require('./routes/api');
 const authorRoutes = require('./routes/author');
 const publisherRoutes = require('./routes/publisher');
 const bookRoutes = require('./routes/book');
+const bookCategoryRoutes = require('./routes/bookcategories');
 const { sequelize } = require('./app/models/index');
 
 const { validation } = require('@kodinggen/express-validator');
@@ -21,11 +22,12 @@ app.use('/api', apiRoutes);
 app.use('/api/authors', authorRoutes);
 app.use('/api/publishers', publisherRoutes);
 app.use('/api/books', bookRoutes);
+app.use('/api/book-categories', bookCategoryRoutes);
 
 app.all('*', (_, res) => {
     res.status(404).json({
         status: 'not found',
-        message: 'Url that you looking for cloun\'t be found!',
+        message: 'Url that you looking for cloudn\'t be found!',
     });
 });
 

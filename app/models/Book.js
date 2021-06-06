@@ -25,6 +25,14 @@ module.exports = function (sequelize, DataTypes, Model) {
             type: DataTypes.TEXT,
             allowNull: true
         },
+        categoryId: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            references: {
+                model: 'BookCategories',
+                deferrable: Deferrable.INITIALLY_DEFERRED
+            }
+        },
         publisherId: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
