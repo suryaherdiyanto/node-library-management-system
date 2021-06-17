@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const apiRoutes = require('./routes/api');
 
 const authorRoutes = require('./routes/author');
@@ -11,9 +12,15 @@ const { sequelize } = require('./app/models/index');
 const { validation } = require('@kodinggen/express-validator');
 
 const app = express();
+const corsOptions = {
+    origin: ['http://localhost', 'https://librarymanagement.kodinggen.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    preflightContinue: false
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true } ));
+app.use(cors(corsOptions));
 
 // Validation init
 app.use(validation());
