@@ -20,14 +20,16 @@ module.exports = {
     create: async function(req, res) {
 
         try {
-            const { title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId } = req.body;
-            const validator = req.validator.build({ title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId }, {
+            const { title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId, categoryId, availableCount, rentPrice } = req.body;
+            const validator = req.validator.build({ title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId, availableCount, rentPrice }, {
                 title: 'required|string',
                 edition: 'required|integer|min:1',
                 numberOfPages: 'required|integer|min:30',
                 coverImage: 'optional|string',
                 publisherId: 'required|integer|min:0',
-                authorId: 'required|integer|min:0'
+                authorId: 'required|integer|min:0',
+                availableCount: 'required|integer',
+                rentPrice: 'required'
             });
             const validationResult = await validator.validate();
 
@@ -35,7 +37,7 @@ module.exports = {
                 return res.status(422).json(validationResult.data);
             }
 
-            const book = await Book.create({ title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId });
+            const book = await Book.create({ title, edition, numberOfPages, publishDate, coverImage, publisherId, authorId, categoryId, availableCount, rentPrice });
     
             res.status(200).json({
                 status: 'success',

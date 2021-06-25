@@ -24,5 +24,7 @@ models.forEach((modelFile) => {
 // Associations
 db['Book'].belongsTo(db['Publisher'], { foreignKey: 'publisherId' });
 db['Book'].belongsTo(db['Author'], { foreignKey: 'authorId' });
+db['Book'].hasMany(db['Borrow']);
+db['Borrow'].belongsTo(db['Book'], { foreignKey: 'bookId'});
 
 module.exports = { sequelize, db };

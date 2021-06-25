@@ -25,6 +25,16 @@ module.exports = function (sequelize, DataTypes, Model) {
             type: DataTypes.TEXT,
             allowNull: true
         },
+        availableCount: {
+            type: DataTypes.INTEGER,
+            default: 0,
+            allowNull: false
+        },
+        rentPrice: {
+            type: DataTypes.FLOAT,
+            default: 0.00,
+            allowNull: false
+        },
         categoryId: {
             type: DataTypes.INTEGER,
             defaultValue: 0,

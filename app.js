@@ -7,6 +7,7 @@ const authorRoutes = require('./routes/author');
 const publisherRoutes = require('./routes/publisher');
 const bookRoutes = require('./routes/book');
 const bookCategoryRoutes = require('./routes/bookcategories');
+const borrowRoutes = require('./routes/borrows');
 const { sequelize } = require('./app/models/index');
 
 const { validation } = require('@kodinggen/express-validator');
@@ -30,6 +31,7 @@ app.use('/api/authors', authorRoutes);
 app.use('/api/publishers', publisherRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/book-categories', bookCategoryRoutes);
+app.use('/api/borrows', borrowRoutes);
 
 app.all('*', (_, res) => {
     res.status(404).json({
