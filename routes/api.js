@@ -14,5 +14,10 @@ router.get('/test', function(req, res) {
         status: 'ok'
     });
 });
+router.get('/test2', function(req, res) {
+    res.status(200).json({
+        status: 'ok'
+    });
+});
 
 module.exports = router;
